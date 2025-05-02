@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Printing Reservation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Book an Appointment</h1>
+
+    <form id="booking-form">
+      <label>Your Name:
+        <input type="text" id="name" required>
+      </label>
+
+      <label>Subject/Title:
+        <input type="text" id="subject" required>
+      </label>
+
+      <label>Department:
+        <select id="department" required>
+          <option value="">Select…</option>
+          <option value="it">IT</option>
+          <option value="industrial">Faculty of Industrial and Energy</option>
+          <option value="health">Faculty of Health Sciences</option>
+        </select>
+      </label>
+
+      <label>Date:
+        <input type="date" id="date" required>
+      </label>
+
+      <label>Available Slots:
+        <select id="slot" required>
+          <option value="">Select…</option>
+        </select>
+      </label>
+
+      <button type="submit">Book</button>
+    </form>
+
+    <div id="message"></div>
+
+    <a href="/slots/export_excel" id="download-btn">Download Excel Report</a>
+  </div>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
