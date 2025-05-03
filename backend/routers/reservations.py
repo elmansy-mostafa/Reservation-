@@ -9,6 +9,7 @@ from backend.models import Reservation
 
 from backend import crud, models, schemas
 from backend.database import get_db
+from backend.utils import export_reservations_by_date
 
 router = APIRouter()
 
@@ -112,6 +113,15 @@ def export_excel(db: Session = Depends(get_db)):
         headers={"Content-Disposition": "attachment; filename=reservations.xlsx"}
     )
 
+
+
+@router.get("/slots/export_excel_by_date")
+def export_excel_by_date(db: Session = Depends(get_db)):
+    reservations = crud.get_reservations(db)
+    if not reservations:
+        raise HTTPException(status_code=404, detail="No reservations found.")
+
+    return export_reservations_by_date(reservations)
 
 @router.delete("/slots/reservations/{reservation_id}")
 def delete_reservation(reservation_id: int, db: Session = Depends(get_db)):
