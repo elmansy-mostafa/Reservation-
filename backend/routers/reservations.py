@@ -5,6 +5,7 @@ from datetime import datetime
 from fastapi.responses import StreamingResponse
 import io
 import pandas as pd
+from backend.models import Reservation
 
 from backend import crud, models, schemas
 from backend.database import get_db
@@ -110,3 +111,21 @@ def export_excel(db: Session = Depends(get_db)):
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers={"Content-Disposition": "attachment; filename=reservations.xlsx"}
     )
+
+
+@router.delete("/slots/reservations/{reservation_id}")
+def delete_reservation(reservation_id: int, db: Session = Depends(get_db)):
+    reservation = db.query(Reservation).filter(Reservation.id == reservation_id).first()
+    if not reservation:
+        raise HTTPException(status_code=404, detail="Reservation not found")
+    
+    db.delete(reservation)
+    db.commit()
+    return {"message": "Reservation deleted successfully"}
+    
+
+@router.delete("/reservations")
+def delete_all_reservations(db: Session = Depends(get_db)):
+    deleted_count = db.query(Reservation).delete()
+    db.commit()
+    return {"message": f"Deleted {deleted_count} reservations."}
