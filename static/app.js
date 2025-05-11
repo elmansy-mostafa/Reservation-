@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set date limits (26/04/2025 to 3 weeks ahead)
   const today = new Date("2025-04-26");
   const maxDate = new Date(today);
-  maxDate.setDate(today.getDate() + 31);
+  maxDate.setDate(today.getDate() + 38);
 
   dateInput.min = today.toISOString().split("T")[0];
   dateInput.max = maxDate.toISOString().split("T")[0];
